@@ -1,0 +1,62 @@
+<!-- templates/users/profile.html -->
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+
+{% block title %}My Profile | Gift Shop{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="card-title mb-0">Account Info</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Joined:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="card-title mb-0">Update Profile</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ u_form.username.id_for_label }}" class="form-label">Username</label>
+                            {{ u_form.username|add_class:"form-control" }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ u_form.email.id_for_label }}" class="form-label">Email</label>
+                            {{ u_form.email|add_class:"form-control" }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ p_form.address.id_for_label }}" class="form-label">Address</label>
+                            {{ p_form.address|add_class:"form-control" }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ p_form.phone.id_for_label }}" class="form-label">Phone</label>
+                            {{ p_form.phone|add_class:"form-control" }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h3>Recent Orders</h3>
+        <a href="{% url 'order_list' %}" class="btn btn-outline-primary">View All Orders</a>
+    </div>
+{% endblock %}
